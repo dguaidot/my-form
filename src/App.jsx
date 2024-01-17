@@ -10,7 +10,7 @@ const App = () => {
 
       </Grid>
       <Typography
-      variant='h4'
+      variant='h3'
       >MI FORMULARIO</Typography>
       {/* Renderiza el formulario */}
       <MyForm />
