@@ -72,16 +72,16 @@ const MyForm = () => {
 
    const handleEditUsuarioPredeterminado = (index) => {
       const usuarioToEdit = usuariosPredeterminados[index];
-   
+
       // Puedes realizar acciones de edición aquí, como abrir un diálogo de edición
       // o cargar los datos del usuario predeterminado en el formulario de edición.
-   
+
       // Por ejemplo, si deseas cargar los datos en el formulario, podrías hacer algo como:
       reset(usuarioToEdit);
-   
+
       // Elimina el usuario predeterminado de la lista actual
       const updatedList = usuariosPredeterminados.filter((_, i) => i !== index);
-   
+
       // Agrega el usuario editado al principio de la lista
       setUsuariosPredeterminados([usuarioToEdit, ...updatedList]);
    };
@@ -106,18 +106,18 @@ const MyForm = () => {
                <Typography>{usuario.username}</Typography>
             </AccordionSummary>
             <AccordionDetails>
-            <Typography>
-               <strong>Nombre de usuario:</strong> {usuario.username}<br />
-               <strong>Nombre:</strong> {usuario.name}<br />
-               <strong>Correo:</strong> {usuario.email}<br />
-               <strong>Teléfono:</strong> {usuario.phone}<br />
-               <strong>Sitio web:</strong> {usuario.website}<br />
-            </Typography>
+               <Typography>
+                  <strong>Nombre de usuario:</strong> {usuario.username}<br />
+                  <strong>Nombre:</strong> {usuario.name}<br />
+                  <strong>Correo:</strong> {usuario.email}<br />
+                  <strong>Teléfono:</strong> {usuario.phone}<br />
+                  <strong>Sitio web:</strong> {usuario.website}<br />
+               </Typography>
             </AccordionDetails>
             <ListItemSecondaryAction>
-            <IconButton edge="end" aria-label="edit" onClick={() => handleEditUsuarioPredeterminado(index)}>
-               <EditIcon />
-            </IconButton>
+               <IconButton edge="end" aria-label="edit" onClick={() => handleEditUsuarioPredeterminado(index)}>
+                  <EditIcon />
+               </IconButton>
                <IconButton edge="end" aria-label="delete" onClick={() => handleDeleteUsuarioPredeterminado(index)}>
                   <DeleteIcon />
                </IconButton>
@@ -133,13 +133,13 @@ const MyForm = () => {
                <Typography>{formData?.username}</Typography>
             </AccordionSummary>
             <AccordionDetails>
-            <Typography>
-               <strong>Nombre de usuario:</strong> {formData?.username}<br />
-               <strong>Nombre:</strong> {formData?.name}<br />
-               <strong>Correo:</strong> {formData?.email}<br />
-               <strong>Teléfono:</strong> {formData?.phone}<br />
-               <strong>Sitio web:</strong> {formData?.website}<br />
-            </Typography>
+               <Typography>
+                  <strong>Nombre de usuario:</strong> {formData?.username}<br />
+                  <strong>Nombre:</strong> {formData?.name}<br />
+                  <strong>Correo:</strong> {formData?.email}<br />
+                  <strong>Teléfono:</strong> {formData?.phone}<br />
+                  <strong>Sitio web:</strong> {formData?.website}<br />
+               </Typography>
             </AccordionDetails>
             <ListItemSecondaryAction>
                <IconButton edge="end" aria-label="edit" onClick={() => handleEdit(index)}>
@@ -157,111 +157,110 @@ const MyForm = () => {
 
       <Grid container spacing={2} /* style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '120vh' }} */>
          <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-         {renderFormHeader()}
+            {renderFormHeader()}
             <form onSubmit={handleSubmit(onSubmit)}>
                <Grid container spacing={2}>
-                  <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-                     <Grid item xs={12} sm={12} md={12} lg={12} xl={12} style={{ marginTop: '5px' }}>
-                        <Controller
-                           name="name"
-                           control={control}
-                           defaultValue=""
-                           rules={{ required: 'Este campo es obligatorio' }}
-                           render={({ field }) => (
-                              <TextField
-                                 sx={{ m: 1, width: '100%' }}
-                                 margin="dense"
-                                 {...field}
-                                 label="Nombre"
-                                 error={!!errors.name}
-                                 helperText={errors.name ? errors.name.message : ''}
-                              />
-                           )}
-                        />
-                     </Grid>
+                  <Grid item xs={12} sm={12} md={12} lg={12} xl={12} style={{ marginTop: '5px' }}>
+                     <Controller
+                        name="name"
+                        control={control}
+                        defaultValue=""
+                        rules={{ required: 'Este campo es obligatorio' }}
+                        render={({ field }) => (
+                           <TextField
+                              sx={{ m: 1, width: '100%' }}
+                              margin="dense"
+                              {...field}
+                              label="Nombre"
+                              error={!!errors.name}
+                              helperText={errors.name ? errors.name.message : ''}
+                           />
+                        )}
+                     />
+                  </Grid>
 
-                     <Grid item xs={12} sm={12} md={12} lg={12} xl={12} style={{ marginTop: '5px' }}>
-                        <Controller
-                           name="username"
-                           control={control}
-                           defaultValue=""
-                           rules={{ required: 'Este campo es obligatorio' }}
-                           render={({ field }) => (
-                              <TextField
-                                 sx={{ m: 1, width: '100%' }}
-                                 margin="dense"
-                                 {...field}
-                                 label="Nombre de usuario"
-                                 error={!!errors.username}
-                                 helperText={errors.username ? errors.username.message : ''}
-                              />
-                           )}
-                        />
-                     </Grid>
-                     <Grid item xs={12} sm={12} md={12} lg={12} xl={12} style={{ marginTop: '5px' }}>
+                  <Grid item xs={12} sm={12} md={12} lg={12} xl={12} style={{ marginTop: '5px' }}>
+                     <Controller
+                        name="username"
+                        control={control}
+                        defaultValue=""
+                        rules={{ required: 'Este campo es obligatorio' }}
+                        render={({ field }) => (
+                           <TextField
+                              sx={{ m: 1, width: '100%' }}
+                              margin="dense"
+                              {...field}
+                              label="Nombre de usuario"
+                              error={!!errors.username}
+                              helperText={errors.username ? errors.username.message : ''}
+                           />
+                        )}
+                     />
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={12} lg={12} xl={12} style={{ marginTop: '5px' }}>
 
-                        <Controller
-                           name="email"
-                           control={control}
-                           defaultValue=""
-                           rules={{
-                              required: 'Este campo es obligatorio',
-                              pattern: { value: /\S+@\S+\.\S+/, message: 'Correo electrónico inválido' },
-                           }}
-                           render={({ field }) => (
-                              <TextField
-                                 sx={{ m: 1, width: '100%' }}
-                                 margin="dense"
-                                 {...field}
-                                 label="Correo electrónico"
-                                 error={!!errors.email}
-                                 helperText={errors.email ? errors.email.message : ''}
-                              />
-                           )}
-                        />
-                     </Grid>
-                     <Grid item xs={12} sm={12} md={12} lg={12} xl={12} style={{ marginTop: '5px' }}>
+                     <Controller
+                        name="email"
+                        control={control}
+                        defaultValue=""
+                        rules={{
+                           required: 'Este campo es obligatorio',
+                           pattern: { value: /\S+@\S+\.\S+/, message: 'Correo electrónico inválido' },
+                        }}
+                        render={({ field }) => (
+                           <TextField
+                              sx={{ m: 1, width: '100%' }}
+                              margin="dense"
+                              {...field}
+                              label="Correo electrónico"
+                              error={!!errors.email}
+                              helperText={errors.email ? errors.email.message : ''}
+                           />
+                        )}
+                     />
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={12} lg={12} xl={12} style={{ marginTop: '5px' }}>
 
-                        <Controller
-                           name="phone"
-                           control={control}
-                           defaultValue=""
-                           rules={{ required: 'Este campo es obligatorio' }}
-                           render={({ field }) => (
-                              <TextField
-                                 sx={{ m: 1, width: '100%' }}
-                                 margin="dense"
-                                 {...field}
-                                 label="Teléfono"
-                                 error={!!errors.phone}
-                                 helperText={errors.phone ? errors.phone.message : ''}
-                              />
-                           )}
-                        />
-                     </Grid>
-                     <Grid item xs={12} sm={12} md={12} lg={12} xl={12} style={{ marginTop: '5px' }}>
+                     <Controller
+                        name="phone"
+                        control={control}
+                        defaultValue=""
+                        rules={{ required: 'Este campo es obligatorio' }}
+                        render={({ field }) => (
+                           <TextField
+                              sx={{ m: 1, width: '100%' }}
+                              margin="dense"
+                              {...field}
+                              label="Teléfono"
+                              error={!!errors.phone}
+                              helperText={errors.phone ? errors.phone.message : ''}
+                           />
+                        )}
+                     />
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={12} lg={12} xl={12} style={{ marginTop: '5px' }}>
 
-                        <Controller
-                           name="website"
-                           control={control}
-                           defaultValue=""
-                           rules={{
-                              required: 'Este campo es obligatorio',
-                              pattern: { value: /^((?!example\.com).)*$/, message: 'Sitio web inválido' },
-                           }}
-                           render={({ field }) => (
-                              <TextField
-                                 sx={{ m: 1, width: '100%' }}
-                                 margin="dense"
-                                 {...field}
-                                 label="Sitio web"
-                                 error={!!errors.website}
-                                 helperText={errors.website ? errors.website.message : ''}
-                              />
-                           )}
-                        />
-                     </Grid>
-                     {/*  <Controller
+                     <Controller
+                        name="website"
+                        control={control}
+                        defaultValue=""
+                        rules={{
+                           required: 'Este campo es obligatorio',
+                           pattern: { value: /^((?!example\.com).)*$/, message: 'Sitio web inválido' },
+                        }}
+                        render={({ field }) => (
+                           <TextField
+                              sx={{ m: 1, width: '100%' }}
+                              margin="dense"
+                              {...field}
+                              label="Sitio web"
+                              error={!!errors.website}
+                              helperText={errors.website ? errors.website.message : ''}
+                           />
+                        )}
+                     />
+                  </Grid>
+                  {/*  <Controller
                   name="ciRif"
                   control={control}
                   defaultValue=""
@@ -280,10 +279,8 @@ const MyForm = () => {
                      />
                   )}
                /> */}
-                  </Grid>
                </Grid>
                <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-
                   <Button
                      style={{ margin: '8px', width: '100%' }}
                      size="large"
@@ -291,7 +288,7 @@ const MyForm = () => {
                      variant="contained"
                      color="primary"
                      disabled={!isDirty || Object.keys(errors).length > 0}>
-                      {renderButtonLabel()}
+                     {renderButtonLabel()}
                   </Button>
                </Grid>
             </form>
@@ -307,18 +304,36 @@ const MyForm = () => {
                {formDataList.map((formData, index) => (
                   <Accordion key={index}>
                      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+
                         <Typography>{formData?.username}</Typography>
                         {/* Añadir '?' para verificar si formData está definido */}
                      </AccordionSummary>
                      <AccordionDetails>
-                        <Typography>
+                        <Grid container spacing={2}>
+                           <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
 
-                           <strong>Nombre:</strong> {formData?.name}<br />
-                           <strong>Correo:</strong> {formData.email}<br />
-                           <strong>Teléfono:</strong> {formData.phone}<br />
-                           <strong>Sitio web:</strong> {formData.website}<br />
-                           {/* <strong>CI/RIF:</strong> {formData.ciRif}<br /> */}
-                        </Typography>
+                              <Typography >
+                                 {`Nombre: ${formData.name}`}
+                              </Typography>
+                           </Grid>
+                           <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+
+                              <Typography >
+                                 {`Correo: ${formData.email}`}
+                              </Typography>
+                           </Grid>
+                           <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+                              <Typography >
+                                 {`Telefono: ${formData.phone}`}
+                              </Typography>
+                           </Grid>
+                           <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+                              <Typography >
+                                 {`Sitio web: ${formData.website}`}
+                              </Typography>
+                           </Grid>
+
+                        </Grid>
                      </AccordionDetails>
                      <ListItemSecondaryAction>
                         <IconButton edge="end" aria-label="edit" onClick={() => handleEdit(index)}>
@@ -330,7 +345,7 @@ const MyForm = () => {
 
             </List>
          </Grid>
-      </Grid>
+      </Grid >
 
    );
 };
