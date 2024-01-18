@@ -6,10 +6,10 @@ import MyForm from './MyForm';
 const App = () => {
   return (
     <Grid container spacing={2}style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-     <Grid item xs={12} sm={12} md={11} lg={11.5} xl={11.5}>
+     <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
 
       <Typography
-      variant='h3'
+      variant='h5'
       >MI FORMULARIO</Typography>
       {/* Renderiza el formulario */}
       <MyForm />

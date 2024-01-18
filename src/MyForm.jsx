@@ -3,6 +3,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { TextField, Button, Grid, List, Accordion, AccordionSummary, AccordionDetails, Typography, ListItemSecondaryAction, IconButton } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 
 const MyForm = () => {
@@ -24,6 +25,8 @@ const MyForm = () => {
 
       loadDefaultUsers();
    }, []);
+
+   const [editingIndex, setEditingIndex] = useState(null);
 
    const onSubmit = (data) => {
       const isNameDuplicate = formDataList.some(formData => formData.name === data.name);
@@ -48,20 +51,53 @@ const MyForm = () => {
       } else {
          console.error('Error: Nombre duplicado');
       }
+      setEditingIndex(null);
    };
 
    const handleEdit = (index) => {
       const formDataToEdit = formDataList[index];
       reset(formDataToEdit);
+      setEditingIndex(index);
+   };
+   const renderButtonLabel = () => {
+      return editingIndex !== null ? 'Editar' : 'Enviar';
+   };
+   const renderFormHeader = () => {
+      return (
+         <Typography variant="h5">
+            {editingIndex !== null ? 'EDITAR USUARIO' : 'NUEVO USUARIO'}
+         </Typography>
+      );
+   };
 
-      // Elimina el usuario de la lista actual
-      const updatedList = formDataList.filter((_, i) => i !== index);
-
+   const handleEditUsuarioPredeterminado = (index) => {
+      const usuarioToEdit = usuariosPredeterminados[index];
+   
+      // Puedes realizar acciones de edición aquí, como abrir un diálogo de edición
+      // o cargar los datos del usuario predeterminado en el formulario de edición.
+   
+      // Por ejemplo, si deseas cargar los datos en el formulario, podrías hacer algo como:
+      reset(usuarioToEdit);
+   
+      // Elimina el usuario predeterminado de la lista actual
+      const updatedList = usuariosPredeterminados.filter((_, i) => i !== index);
+   
       // Agrega el usuario editado al principio de la lista
-      setFormDataList([formDataToEdit, ...updatedList]);
+      setUsuariosPredeterminados([usuarioToEdit, ...updatedList]);
    };
 
 
+
+   const handleDelete = (index) => {
+      const updatedList = [...formDataList];
+      updatedList.splice(index, 1);
+      setFormDataList(updatedList);
+   };
+   const handleDeleteUsuarioPredeterminado = (index) => {
+      const updatedList = [...usuariosPredeterminados];
+      updatedList.splice(index, 1);
+      setUsuariosPredeterminados(updatedList);
+   };
 
    const renderUsuariosPrincipales = () => {
       return usuariosPredeterminados.map((usuario, index) => (
@@ -70,16 +106,47 @@ const MyForm = () => {
                <Typography>{usuario.username}</Typography>
             </AccordionSummary>
             <AccordionDetails>
-               <Typography>
-                  <strong>Nombre:</strong> {usuario.name}<br />
-                  <strong>Correo:</strong> {usuario.email}<br />
-                  <strong>Teléfono:</strong> {usuario.phone}<br />
-                  <strong>Sitio web:</strong> {usuario.website}<br />
-               </Typography>
+            <Typography>
+               <strong>Nombre de usuario:</strong> {usuario.username}<br />
+               <strong>Nombre:</strong> {usuario.name}<br />
+               <strong>Correo:</strong> {usuario.email}<br />
+               <strong>Teléfono:</strong> {usuario.phone}<br />
+               <strong>Sitio web:</strong> {usuario.website}<br />
+            </Typography>
+            </AccordionDetails>
+            <ListItemSecondaryAction>
+            <IconButton edge="end" aria-label="edit" onClick={() => handleEditUsuarioPredeterminado(index)}>
+               <EditIcon />
+            </IconButton>
+               <IconButton edge="end" aria-label="delete" onClick={() => handleDeleteUsuarioPredeterminado(index)}>
+                  <DeleteIcon />
+               </IconButton>
+            </ListItemSecondaryAction>
+         </Accordion>
+      ));
+   };
+
+   const renderFormDataList = () => {
+      return formDataList.map((formData, index) => (
+         <Accordion key={index}>
+            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+               <Typography>{formData?.username}</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+            <Typography>
+               <strong>Nombre de usuario:</strong> {formData?.username}<br />
+               <strong>Nombre:</strong> {formData?.name}<br />
+               <strong>Correo:</strong> {formData?.email}<br />
+               <strong>Teléfono:</strong> {formData?.phone}<br />
+               <strong>Sitio web:</strong> {formData?.website}<br />
+            </Typography>
             </AccordionDetails>
             <ListItemSecondaryAction>
                <IconButton edge="end" aria-label="edit" onClick={() => handleEdit(index)}>
                   <EditIcon />
+               </IconButton>
+               <IconButton edge="end" aria-label="delete" onClick={() => handleDelete(index)}>
+                  <DeleteIcon />
                </IconButton>
             </ListItemSecondaryAction>
          </Accordion>
@@ -88,10 +155,11 @@ const MyForm = () => {
 
    return (
 
-      <Grid container spacing={60} /* style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '120vh' }} */>
-         <Grid item xs={12} sm={12} md={12} lg={6} xl={6}>
+      <Grid container spacing={2} /* style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '120vh' }} */>
+         <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+         {renderFormHeader()}
             <form onSubmit={handleSubmit(onSubmit)}>
-               <Grid container spacing={1}>
+               <Grid container spacing={2}>
                   <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
                      <Grid item xs={12} sm={12} md={12} lg={12} xl={12} style={{ marginTop: '5px' }}>
                         <Controller
@@ -101,6 +169,8 @@ const MyForm = () => {
                            rules={{ required: 'Este campo es obligatorio' }}
                            render={({ field }) => (
                               <TextField
+                                 sx={{ m: 1, width: '100%' }}
+                                 margin="dense"
                                  {...field}
                                  label="Nombre"
                                  error={!!errors.name}
@@ -118,6 +188,8 @@ const MyForm = () => {
                            rules={{ required: 'Este campo es obligatorio' }}
                            render={({ field }) => (
                               <TextField
+                                 sx={{ m: 1, width: '100%' }}
+                                 margin="dense"
                                  {...field}
                                  label="Nombre de usuario"
                                  error={!!errors.username}
@@ -138,6 +210,8 @@ const MyForm = () => {
                            }}
                            render={({ field }) => (
                               <TextField
+                                 sx={{ m: 1, width: '100%' }}
+                                 margin="dense"
                                  {...field}
                                  label="Correo electrónico"
                                  error={!!errors.email}
@@ -155,6 +229,8 @@ const MyForm = () => {
                            rules={{ required: 'Este campo es obligatorio' }}
                            render={({ field }) => (
                               <TextField
+                                 sx={{ m: 1, width: '100%' }}
+                                 margin="dense"
                                  {...field}
                                  label="Teléfono"
                                  error={!!errors.phone}
@@ -175,6 +251,8 @@ const MyForm = () => {
                            }}
                            render={({ field }) => (
                               <TextField
+                                 sx={{ m: 1, width: '100%' }}
+                                 margin="dense"
                                  {...field}
                                  label="Sitio web"
                                  error={!!errors.website}
@@ -192,7 +270,9 @@ const MyForm = () => {
                      pattern: { value: /^[VE]\d{7,9}$/, message: 'Formato de RIF inválido' },
                   }}
                   render={({ field }) => (
-                     <TextField
+                     <TextField 
+                     sx={{ m: 1, width: '100%' }} 
+                     margin="dense"
                         {...field}
                         label="CI o RIF"
                         error={!!errors.ciRif}
@@ -204,8 +284,14 @@ const MyForm = () => {
                </Grid>
                <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
 
-                  <Button type="submit" variant="contained" color="primary" disabled={!isDirty || Object.keys(errors).length > 0}>
-                     Enviar
+                  <Button
+                     style={{ margin: '8px', width: '100%' }}
+                     size="large"
+                     type="submit"
+                     variant="contained"
+                     color="primary"
+                     disabled={!isDirty || Object.keys(errors).length > 0}>
+                      {renderButtonLabel()}
                   </Button>
                </Grid>
             </form>
@@ -215,7 +301,9 @@ const MyForm = () => {
 
                <Typography
                   variant="h5"
-               >Lista de Usuarios</Typography>
+               >LISTA DE USUARIOS</Typography>
+               {renderFormDataList()}
+               {renderUsuariosPrincipales()}
                {formDataList.map((formData, index) => (
                   <Accordion key={index}>
                      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
@@ -241,7 +329,6 @@ const MyForm = () => {
                ))}
 
             </List>
-            {renderUsuariosPrincipales()}
          </Grid>
       </Grid>
 
